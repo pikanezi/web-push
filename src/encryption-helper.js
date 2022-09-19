@@ -3,6 +3,7 @@
 const crypto = require('crypto');
 const ece = require('http_ece');
 const urlBase64 = require('urlsafe-base64');
+const createECDH = require('create-ecdh');
 
 const encrypt = function(userPublicKey, userAuth, payload, contentEncoding) {
   if (!userPublicKey) {
@@ -38,7 +39,7 @@ const encrypt = function(userPublicKey, userAuth, payload, contentEncoding) {
     payload = Buffer.from(payload);
   }
 
-  const localCurve = crypto.createECDH('prime256v1');
+  const localCurve = createECDH('prime256v1');
   const localPublicKey = localCurve.generateKeys();
 
   const salt = urlBase64.encode(crypto.randomBytes(16));
